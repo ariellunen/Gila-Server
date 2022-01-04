@@ -1,1 +1,3 @@
-# Gila-Server
+﻿# server-side-CRUD
+npm i
+npm run dev

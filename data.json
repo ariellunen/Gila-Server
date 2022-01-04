@@ -1,0 +1,151 @@
+{
+  "responseId": "c5bd8fc1-951c-49c2-8a22-38226959a2c0-e9fa6883",
+  "queryResult": {
+    "queryText": "this is the description",
+    "action": "CreateNewHost.CreateNewHost-custom.CreateNewHost-custom-custom",
+    "parameters": {
+      "description": "this is the description"
+    },
+    "allRequiredParamsPresent": true,
+    "fulfillmentText": "Great. creating your host now",
+    "fulfillmentMessages": [
+      {
+        "text": {
+          "text": [
+            "Great. creating your host now"
+          ]
+        }
+      }
+    ],
+    "outputContexts": [
+      {
+        "name": "projects/shenkar2/agent/sessions/ABwppHEVXZegwaGG9bH81uu76UVAsuLA-Hku0phcHbzfIDs1h1t2qWFd-9nmlht7Oc7CVZrLk0E/contexts/actions_capability_account_linking",
+        "parameters": {
+          "description": "this is the description",
+          "description.original": "this is the description"
+        }
+      },
+      {
+        "name": "projects/shenkar2/agent/sessions/ABwppHEVXZegwaGG9bH81uu76UVAsuLA-Hku0phcHbzfIDs1h1t2qWFd-9nmlht7Oc7CVZrLk0E/contexts/actions_capability_audio_output",
+        "parameters": {
+          "description": "this is the description",
+          "description.original": "this is the description"
+        }
+      },
+      {
+        "name": "projects/shenkar2/agent/sessions/ABwppHEVXZegwaGG9bH81uu76UVAsuLA-Hku0phcHbzfIDs1h1t2qWFd-9nmlht7Oc7CVZrLk0E/contexts/actions_capability_media_response_audio",
+        "parameters": {
+          "description": "this is the description",
+          "description.original": "this is the description"
+        }
+      },
+      {
+        "name": "projects/shenkar2/agent/sessions/ABwppHEVXZegwaGG9bH81uu76UVAsuLA-Hku0phcHbzfIDs1h1t2qWFd-9nmlht7Oc7CVZrLk0E/contexts/google_assistant_input_type_voice",
+        "parameters": {
+          "description": "this is the description",
+          "description.original": "this is the description"
+        }
+      },
+      {
+        "name": "projects/shenkar2/agent/sessions/ABwppHEVXZegwaGG9bH81uu76UVAsuLA-Hku0phcHbzfIDs1h1t2qWFd-9nmlht7Oc7CVZrLk0E/contexts/createnewhost-followup",
+        "lifespanCount": 3,
+        "parameters": {
+          "hostname": "David the king",
+          "hostname.original": "David the king",
+          "description": "this is the description",
+          "description.original": "this is the description"
+        }
+      },
+      {
+        "name": "projects/shenkar2/agent/sessions/ABwppHEVXZegwaGG9bH81uu76UVAsuLA-Hku0phcHbzfIDs1h1t2qWFd-9nmlht7Oc7CVZrLk0E/contexts/createnewhost-custom-followup",
+        "lifespanCount": 4,
+        "parameters": {
+          "hostname": "David the king",
+          "hostname.original": "David the king",
+          "description": "this is the description",
+          "description.original": "this is the description"
+        }
+      },
+      {
+        "name": "projects/shenkar2/agent/sessions/ABwppHEVXZegwaGG9bH81uu76UVAsuLA-Hku0phcHbzfIDs1h1t2qWFd-9nmlht7Oc7CVZrLk0E/contexts/_system_counters_",
+        "parameters": {
+          "no-input": 0,
+          "no-match": 0,
+          "description": "this is the description",
+          "description.original": "this is the description"
+        }
+      }
+    ],
+    "intent": {
+      "name": "projects/shenkar2/agent/intents/741575fa-3127-4a7b-870d-4c8033e0dfc3",
+      "displayName": "CreateNewHost - custom - custom",
+      "endInteraction": true
+    },
+    "intentDetectionConfidence": 0.3,
+    "languageCode": "en"
+  },
+  "originalDetectIntentRequest": {
+    "source": "google",
+    "version": "2",
+    "payload": {
+      "user": {
+        "locale": "en-US",
+        "lastSeen": "2022-01-03T20:12:11Z",
+        "userVerificationStatus": "GUEST"
+      },
+      "conversation": {
+        "conversationId": "ABwppHEVXZegwaGG9bH81uu76UVAsuLA-Hku0phcHbzfIDs1h1t2qWFd-9nmlht7Oc7CVZrLk0E",
+        "type": "ACTIVE",
+        "conversationToken": "[\"createnewhost-custom-followup\",\"createnewhost-followup\"]"
+      },
+      "inputs": [
+        {
+          "intent": "actions.intent.TEXT",
+          "rawInputs": [
+            {
+              "inputType": "VOICE",
+              "query": "this is the description"
+            }
+          ],
+          "arguments": [
+            {
+              "name": "text",
+              "rawText": "this is the description",
+              "textValue": "this is the description"
+            }
+          ]
+        }
+      ],
+      "surface": {
+        "capabilities": [
+          {
+            "name": "actions.capability.ACCOUNT_LINKING"
+          },
+          {
+            "name": "actions.capability.AUDIO_OUTPUT"
+          },
+          {
+            "name": "actions.capability.MEDIA_RESPONSE_AUDIO"
+          }
+        ]
+      },
+      "isInSandbox": true,
+      "availableSurfaces": [
+        {
+          "capabilities": [
+            {
+              "name": "actions.capability.SCREEN_OUTPUT"
+            },
+            {
+              "name": "actions.capability.AUDIO_OUTPUT"
+            },
+            {
+              "name": "actions.capability.WEB_BROWSER"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "session": "projects/shenkar2/agent/sessions/ABwppHEVXZegwaGG9bH81uu76UVAsuLA-Hku0phcHbzfIDs1h1t2qWFd-9nmlht7Oc7CVZrLk0E"
+}
