@@ -20,7 +20,7 @@ app.post('/assistent', async (req, res) => {
         }
         else if (ans=="create"){
             await handleWebhook.createUser(req.body);
-            res.status(200).json({"Succsses":"Got a Create request"});
+            res.status(200).json({"Success":"Got a Create request"});
         }
     }
     catch{
