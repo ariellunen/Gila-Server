@@ -8,6 +8,18 @@ module.exports = {
         //fetch to Saar
 
     },
+
+    checkRequest: async (body) =>{
+        const requestType = body.queryResult.action;
+        console.log(typeof(requestType));
+        if(requestType.includes("CreateNewHost"))
+        {
+            console.log(requestType);
+            return "create";
+        }
+        //Need to add else if for the rest of the skills
+        
+    },
     
     // getUsers: async () => {
     //     const conn = await getCon()

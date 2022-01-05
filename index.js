@@ -1,5 +1,3 @@
-
-
 const express = require('express')
 const cors = require('cors')
 
@@ -15,17 +13,18 @@ app.listen(PORT)
 
 app.post('/assistent', async (req, res) => {
     try{
-        //TODO: check if there is more param to check if valid, change response strings
+        const ans = await handleWebhook.checkRequest(req.body);
+        //TODO: check if there is more param to check if valid
         if(req.body == undefined){
-            res.status(404).json({"error": "User wasnt added"});
+            res.status(404).json({"Error": "Something went wrong"});
         }
-        else{
+        else if (ans=="create"){
             await handleWebhook.createUser(req.body);
-            res.status(200).json({"Succsses":"The user added!"});
+            res.status(200).json({"Succsses":"Got a Create request"});
         }
     }
     catch{
-        res.status(404).json({"error": "User wasnt added"});
+        res.status(404).json({"Error": "Something went wrong"});
     }
 })
 
