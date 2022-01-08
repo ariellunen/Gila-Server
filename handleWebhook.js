@@ -1,52 +1,52 @@
+const axios = require("axios").default;
+const config = require('./config');
+const Zabbix = require('zabbix-promise')
+const URL = config.URL
+
+const zabbix = new Zabbix({
+    url: config.URL,
+    user: config.User,
+    password: config.Password
+  })
+
+
 
 module.exports = {
-    createUser: async (user) => {
-        const hostNme = user.queryResult.outputContexts[5].parameters.hostname;
-        const description = user.queryResult.outputContexts[5].parameters.description;
-        console.log(hostNme);
-        console.log(description);
-        //fetch to Saar
 
+    createRequest: async (req) => {
+        const hostName = req.queryResult.outputContexts[5].parameters.hostname;
+        const description = req.queryResult.outputContexts[5].parameters.description;
+        try {
+            await zabbix.login()
+            const groups = await zabbix.request('hostgroup.get', {})
+            const groupId = groups[groups.length - 1].groupid
+            const host = await zabbix.request('host.create', {
+              host: hostName,
+              groups: [{ groupid: groupId }],
+              description : description,
+              interfaces: [{
+                type: 1,
+                main: 1,
+                useip: 1,
+                ip: '127.0.0.1',
+                dns: '',
+                port: '10050',
+              }]
+            })
+            console.log(host)
+            zabbix.logout()
+          } catch (error) {
+            console.error(error)
+          }
     },
 
     checkRequest: async (body) =>{
         const requestType = body.queryResult.action;
-        console.log(typeof(requestType));
         if(requestType.includes("CreateNewHost"))
         {
-            console.log(requestType);
             return "create";
         }
         //Need to add else if for the rest of the skills
         
     },
-    
-    // getUsers: async () => {
-    //     const conn = await getCon()
-    //     const [rows] = await conn.execute('SELECT * FROM `users-crud`.users');
-    //     return rows
-    // },
-    // getUserById: async (id) => {
-    //     const conn = await getCon()
-    //     const [rows] = await conn.execute(`SELECT * FROM users where id=${id}`);
-    //     return rows[0]
-    // },
-
-    // updateUser: async (id, data) => {
-    //     let update = Object.entries(data).map(([key, value]) => `${key}='${value}'`)
-    //     const conn = await getCon()
-    //     const result = await conn.execute(`
-    //         UPDATE users
-    //         SET ${update.join(', ')}
-    //         WHERE id = ${id};
-    //      `);
-    //     return result
-    // },
-    // deleteUser: async (id) => {
-    //     const conn = await getCon()
-    //     const result = await conn.execute(`
-    //         DELETE FROM users WHERE id = ${id}
-    //      `);
-    //     return result
-    // },
 }

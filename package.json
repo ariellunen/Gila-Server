@@ -11,12 +11,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.24.0",
     "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "i": "^0.3.7",
     "index.js": "0.0.3",
     "mysql2": "^2.3.0",
-    "node": "^17.3.0"
+    "node": "^17.3.0",
+    "node-zabbix-sender": "^1.1.0",
+    "zabbix-promise": "^2.0.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.12"
