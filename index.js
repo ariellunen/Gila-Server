@@ -11,6 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // parsing
 const PORT = config.PORT || 5050;
 
+
 app.listen(PORT , ()=>{
     console.log(`Gila node server listening at http://localhost:${config.PORT}`);
 });

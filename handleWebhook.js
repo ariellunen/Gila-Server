@@ -9,7 +9,19 @@ const zabbix = new Zabbix({
     password: config.Password
   })
 
-
+  const zabbixSender = async (key, value) => {
+    try {
+      const result = await Zabbix.sender({
+        server: '172.20.10.10', // Same as the address inside the .env
+        host: 'g',
+        key,
+        value,
+      })
+      console.log(result)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
 module.exports = {
 
@@ -18,6 +30,8 @@ module.exports = {
         const description = req.queryResult.outputContexts[5].parameters.description;
         try {
             await zabbix.login()
+            await zabbixSender("req.create.host", 1);
+
             const groups = await zabbix.request('hostgroup.get', {})
             const groupId = groups[groups.length - 1].groupid
             const host = await zabbix.request('host.create', {
@@ -34,6 +48,8 @@ module.exports = {
               }]
             })
             console.log(host)
+            
+            await zabbixSender("res.create.host", 1);
             zabbix.logout()
           } catch (error) {
             console.error(error)
