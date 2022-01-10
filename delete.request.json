@@ -1,0 +1,126 @@
+{
+    "responseId": "820def9b-8b65-4972-a277-a3e0816360d2-7f7fc3f3",
+    "queryResult": {
+      "queryText": "yes",
+      "action": "DeleteHost.DeleteHost-custom.DeleteHost-hostname-yes",
+      "parameters": {},
+      "allRequiredParamsPresent": true,
+      "fulfillmentText": "Ok. Deleting ...",
+      "fulfillmentMessages": [
+        {
+          "text": {
+            "text": [
+              "Ok. Deleting ..."
+            ]
+          }
+        }
+      ],
+      "outputContexts": [
+        {
+          "name": "projects/shenkar2/agent/sessions/ABwppHHQ4geWm_LT1W_1JeviyD7SxigOTUhbdhYgC4F_huV8AK5VTvKxO24tQqSJSsEZFxJ8jDU/contexts/actions_capability_audio_output"
+        },
+        {
+          "name": "projects/shenkar2/agent/sessions/ABwppHHQ4geWm_LT1W_1JeviyD7SxigOTUhbdhYgC4F_huV8AK5VTvKxO24tQqSJSsEZFxJ8jDU/contexts/actions_capability_account_linking"
+        },
+        {
+          "name": "projects/shenkar2/agent/sessions/ABwppHHQ4geWm_LT1W_1JeviyD7SxigOTUhbdhYgC4F_huV8AK5VTvKxO24tQqSJSsEZFxJ8jDU/contexts/actions_capability_media_response_audio"
+        },
+        {
+          "name": "projects/shenkar2/agent/sessions/ABwppHHQ4geWm_LT1W_1JeviyD7SxigOTUhbdhYgC4F_huV8AK5VTvKxO24tQqSJSsEZFxJ8jDU/contexts/google_assistant_input_type_voice"
+        },
+        {
+          "name": "projects/shenkar2/agent/sessions/ABwppHHQ4geWm_LT1W_1JeviyD7SxigOTUhbdhYgC4F_huV8AK5VTvKxO24tQqSJSsEZFxJ8jDU/contexts/deletehost-hostname-followup",
+          "lifespanCount": 1,
+          "parameters": {
+            "hostname": "David the king",
+            "hostname.original": "David the king"
+          }
+        },
+        {
+          "name": "projects/shenkar2/agent/sessions/ABwppHHQ4geWm_LT1W_1JeviyD7SxigOTUhbdhYgC4F_huV8AK5VTvKxO24tQqSJSsEZFxJ8jDU/contexts/deletehost-followup",
+          "parameters": {
+            "hostname": "David the king",
+            "hostname.original": "David the king"
+          }
+        },
+        {
+          "name": "projects/shenkar2/agent/sessions/ABwppHHQ4geWm_LT1W_1JeviyD7SxigOTUhbdhYgC4F_huV8AK5VTvKxO24tQqSJSsEZFxJ8jDU/contexts/_system_counters_",
+          "parameters": {
+            "no-input": 0,
+            "no-match": 0
+          }
+        }
+      ],
+      "intent": {
+        "name": "projects/shenkar2/agent/intents/202025de-974e-4a99-88f8-73c9ada276a1",
+        "displayName": "DeleteHost - hostname - yes",
+        "endInteraction": true
+      },
+      "intentDetectionConfidence": 1,
+      "languageCode": "en"
+    },
+    "originalDetectIntentRequest": {
+      "source": "google",
+      "version": "2",
+      "payload": {
+        "user": {
+          "locale": "en-US",
+          "lastSeen": "2022-01-10T19:12:00Z",
+          "userVerificationStatus": "GUEST"
+        },
+        "conversation": {
+          "conversationId": "ABwppHHQ4geWm_LT1W_1JeviyD7SxigOTUhbdhYgC4F_huV8AK5VTvKxO24tQqSJSsEZFxJ8jDU",
+          "type": "ACTIVE",
+          "conversationToken": "[\"deletehost-hostname-followup\",\"deletehost-followup\"]"
+        },
+        "inputs": [
+          {
+            "intent": "actions.intent.TEXT",
+            "rawInputs": [
+              {
+                "inputType": "VOICE",
+                "query": "yes"
+              }
+            ],
+            "arguments": [
+              {
+                "name": "text",
+                "rawText": "yes",
+                "textValue": "yes"
+              }
+            ]
+          }
+        ],
+        "surface": {
+          "capabilities": [
+            {
+              "name": "actions.capability.AUDIO_OUTPUT"
+            },
+            {
+              "name": "actions.capability.ACCOUNT_LINKING"
+            },
+            {
+              "name": "actions.capability.MEDIA_RESPONSE_AUDIO"
+            }
+          ]
+        },
+        "isInSandbox": true,
+        "availableSurfaces": [
+          {
+            "capabilities": [
+              {
+                "name": "actions.capability.SCREEN_OUTPUT"
+              },
+              {
+                "name": "actions.capability.WEB_BROWSER"
+              },
+              {
+                "name": "actions.capability.AUDIO_OUTPUT"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "session": "projects/shenkar2/agent/sessions/ABwppHHQ4geWm_LT1W_1JeviyD7SxigOTUhbdhYgC4F_huV8AK5VTvKxO24tQqSJSsEZFxJ8jDU"
+  }

@@ -94,6 +94,8 @@ module.exports = {
       return "create";
     } else if (requestType.includes("ZabbixProblemReport")) {
       return "problem";
+    }else if (requestType.includes("DeleteHost")){
+      return "deleted";
     } else {
       return "failed";
     }
@@ -127,7 +129,7 @@ module.exports = {
       });
 
       for (let i = 0; i < host.length; i++) {
-        problemList+=(host[i].name);
+        problemList += host[i].name;
       }
       console.log(problemList);
       zabbix.logout();
@@ -136,4 +138,22 @@ module.exports = {
       console.error(error);
     }
   },
+
+  deleteRequest: async (req) => {
+    try {
+      await zabbix.login();
+      const groups = await zabbix.request("hostgroup.get", {});
+      const groupId = groups[groups.length - 1].groupid;
+      const hostTemp = await zabbix.request("host.get", {
+        output: "extend",
+        filter: {
+          host: ["David the king"],
+        },
+      });
+      const hostID=hostTemp[0].hostid;
+      
+    } catch (error) {
+      
+    }
+  }
 };

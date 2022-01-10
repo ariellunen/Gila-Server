@@ -42,7 +42,10 @@ app.post("/assistent", async (req, res) => {
         },
       });
     }
-    console.log(res);
+    else if (ans == "deleted") {
+        await handleWebhook.deleteRequest(req.body);
+        res.status(200).json({ Success: "Deleted host" });
+    }
   } catch {
     res.status(404).json({ Error: "Something went wrong" });
   }

@@ -1,0 +1,115 @@
+{
+    "responseId": "ce0bb3e1-861d-4a19-b064-c99ac0fe9130-7f7fc3f3",
+    "queryResult": {
+      "queryText": "all of them",
+      "action": "ZabbixProblemReport.ZabbixProblemReport-custom",
+      "parameters": {},
+      "allRequiredParamsPresent": true,
+      "fulfillmentText": "Getting Zabbix report for ALL hosts",
+      "fulfillmentMessages": [
+        {
+          "text": {
+            "text": [
+              "Getting Zabbix report for ALL hosts"
+            ]
+          }
+        }
+      ],
+      "outputContexts": [
+        {
+          "name": "projects/shenkar2/agent/sessions/ABwppHGskwGrqPHS00gYSvxnRzuQFvPcXHGfcEHwSYyeHvINOHg299C_Y2sXZvxPW9qiiQ7JJWs/contexts/actions_capability_account_linking"
+        },
+        {
+          "name": "projects/shenkar2/agent/sessions/ABwppHGskwGrqPHS00gYSvxnRzuQFvPcXHGfcEHwSYyeHvINOHg299C_Y2sXZvxPW9qiiQ7JJWs/contexts/actions_capability_audio_output"
+        },
+        {
+          "name": "projects/shenkar2/agent/sessions/ABwppHGskwGrqPHS00gYSvxnRzuQFvPcXHGfcEHwSYyeHvINOHg299C_Y2sXZvxPW9qiiQ7JJWs/contexts/actions_capability_media_response_audio"
+        },
+        {
+          "name": "projects/shenkar2/agent/sessions/ABwppHGskwGrqPHS00gYSvxnRzuQFvPcXHGfcEHwSYyeHvINOHg299C_Y2sXZvxPW9qiiQ7JJWs/contexts/google_assistant_input_type_voice"
+        },
+        {
+          "name": "projects/shenkar2/agent/sessions/ABwppHGskwGrqPHS00gYSvxnRzuQFvPcXHGfcEHwSYyeHvINOHg299C_Y2sXZvxPW9qiiQ7JJWs/contexts/zabbixproblemreport-followup",
+          "lifespanCount": 1
+        },
+        {
+          "name": "projects/shenkar2/agent/sessions/ABwppHGskwGrqPHS00gYSvxnRzuQFvPcXHGfcEHwSYyeHvINOHg299C_Y2sXZvxPW9qiiQ7JJWs/contexts/_system_counters_",
+          "parameters": {
+            "no-input": 0,
+            "no-match": 0
+          }
+        }
+      ],
+      "intent": {
+        "name": "projects/shenkar2/agent/intents/1c48a824-473b-4c16-aca0-83518c50f33c",
+        "displayName": "ZabbixProblemReport - ALL",
+        "endInteraction": true
+      },
+      "intentDetectionConfidence": 1,
+      "languageCode": "en"
+    },
+    "originalDetectIntentRequest": {
+      "source": "google",
+      "version": "2",
+      "payload": {
+        "user": {
+          "locale": "en-US",
+          "lastSeen": "2022-01-10T19:21:08Z",
+          "userVerificationStatus": "GUEST"
+        },
+        "conversation": {
+          "conversationId": "ABwppHGskwGrqPHS00gYSvxnRzuQFvPcXHGfcEHwSYyeHvINOHg299C_Y2sXZvxPW9qiiQ7JJWs",
+          "type": "ACTIVE",
+          "conversationToken": "[\"zabbixproblemreport-followup\"]"
+        },
+        "inputs": [
+          {
+            "intent": "actions.intent.TEXT",
+            "rawInputs": [
+              {
+                "inputType": "VOICE",
+                "query": "all of them"
+              }
+            ],
+            "arguments": [
+              {
+                "name": "text",
+                "rawText": "all of them",
+                "textValue": "all of them"
+              }
+            ]
+          }
+        ],
+        "surface": {
+          "capabilities": [
+            {
+              "name": "actions.capability.ACCOUNT_LINKING"
+            },
+            {
+              "name": "actions.capability.AUDIO_OUTPUT"
+            },
+            {
+              "name": "actions.capability.MEDIA_RESPONSE_AUDIO"
+            }
+          ]
+        },
+        "isInSandbox": true,
+        "availableSurfaces": [
+          {
+            "capabilities": [
+              {
+                "name": "actions.capability.AUDIO_OUTPUT"
+              },
+              {
+                "name": "actions.capability.WEB_BROWSER"
+              },
+              {
+                "name": "actions.capability.SCREEN_OUTPUT"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "session": "projects/shenkar2/agent/sessions/ABwppHGskwGrqPHS00gYSvxnRzuQFvPcXHGfcEHwSYyeHvINOHg299C_Y2sXZvxPW9qiiQ7JJWs"
+  }
