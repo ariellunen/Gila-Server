@@ -12,16 +12,16 @@ const zabbix = new Zabbix({
 const zabbixSender = async (key, value, host) => {
   try {
     const result = await Zabbix.sender({
-      server: '172.20.10.10', // Same as the address inside the .env
+      server: "172.20.10.10", // Same as the address inside the .env
       key,
       value,
-      host
-    })
-    console.log(result)
+      host,
+    });
+    console.log(result);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
-}
+};
 
 module.exports = {
   createRequest: async (req) => {
@@ -43,7 +43,7 @@ module.exports = {
       //     console.error(error);
       //   }
       // };
-      await zabbixSender("req.create.host", 1, 'zserver'); //change to G 
+      await zabbixSender("req.create.host", 1, "zserver"); //change to G
 
       const groups = await zabbix.request("hostgroup.get", {});
       const groupId = groups[groups.length - 1].groupid;
@@ -80,7 +80,7 @@ module.exports = {
 
       console.log(host);
 
-      await zabbixSender("res.create.host", 1, 'zserver'); //change to G
+      await zabbixSender("res.create.host", 1, "zserver"); //change to G
       zabbix.logout();
     } catch (error) {
       console.error(error);
@@ -89,10 +89,11 @@ module.exports = {
 
   checkRequest: async (body) => {
     const requestType = body.queryResult.action;
+    console.log(requestType);
     if (requestType.includes("CreateNewHost")) {
       return "create";
-    } else if (requestType.includes("problems")) {
-      return "problems";
+    } else if (requestType.includes("ZabbixProblemReport")) {
+      return "problem";
     } else {
       return "failed";
     }
@@ -101,6 +102,7 @@ module.exports = {
   problemsRequest: async (req) => {
     try {
       await zabbix.login();
+      let problemList = "";
       const groups = await zabbix.request("hostgroup.get", {});
       const groupId = groups[groups.length - 1].groupid;
       const host = await zabbix.request("problem.get", {
@@ -123,8 +125,13 @@ module.exports = {
           },
         ],
       });
-      console.log(host);
+
+      for (let i = 0; i < host.length; i++) {
+        problemList+=(host[i].name);
+      }
+      console.log(problemList);
       zabbix.logout();
+      return problemList;
     } catch (error) {
       console.error(error);
     }
