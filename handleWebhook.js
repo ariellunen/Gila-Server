@@ -2,6 +2,7 @@ const axios = require("axios").default;
 const config = require("./config");
 const Zabbix = require("zabbix-promise");
 const URL = config.URL;
+const ADDRESS = config.ADDRESS;
 
 const zabbix = new Zabbix({
   url: config.URL,
@@ -12,12 +13,13 @@ const zabbix = new Zabbix({
 const zabbixSender = async (key, value, host) => {
   try {
     const result = await Zabbix.sender({
-      server: "172.20.10.10", // Same as the address inside the .env
+      server: ADDRESS,
       key,
       value,
       host,
     });
     console.log(result);
+    console.log(ADDRESS);
   } catch (error) {
     console.error(error);
   }
@@ -30,33 +32,16 @@ module.exports = {
       req.queryResult.outputContexts[5].parameters.description;
     try {
       await zabbix.login();
-      // const zabbixSender = async (Key, Value) => {
-      //   try {
-      //     const result = await Zabbix.sender({
-      //       server: "172.20.10.10", // Same as the address inside the .env
-      //       host: hostName,
-      //       key: Key,
-      //       value: Value,
-      //     });
-      //     console.log(result);
-      //   } catch (error) {
-      //     console.error(error);
-      //   }
-      // };
       await zabbixSender("req.create.host", 1, "zserver"); //change to G
-
       const groups = await zabbix.request("hostgroup.get", {});
       const groupId = groups[groups.length - 1].groupid;
-
       const templateID = await zabbix.request("template.get", {
         output: "extend",
         filter: {
           host: ["Template Monitoring Requests and Responses"],
         },
       });
-      //console.log(templateID[0].templateid);
       const temp = templateID[0].templateid;
-
       const host = await zabbix.request("host.create", {
         host: hostName,
         groups: [{ groupid: groupId }],
@@ -82,6 +67,7 @@ module.exports = {
 
       await zabbixSender("res.create.host", 1, "zserver"); //change to G
       zabbix.logout();
+      return hostName;
     } catch (error) {
       console.error(error);
     }
@@ -94,7 +80,7 @@ module.exports = {
       return "create";
     } else if (requestType.includes("ZabbixProblemReport")) {
       return "problem";
-    }else if (requestType.includes("DeleteHost")){
+    } else if (requestType.includes("DeleteHost")) {
       return "deleted";
     } else {
       return "failed";
@@ -104,6 +90,7 @@ module.exports = {
   problemsRequest: async (req) => {
     try {
       await zabbix.login();
+      await zabbixSender("req.list.problems", 1, "zserver"); //change to G
       let problemList = "";
       const groups = await zabbix.request("hostgroup.get", {});
       const groupId = groups[groups.length - 1].groupid;
@@ -132,6 +119,7 @@ module.exports = {
         problemList += host[i].name;
       }
       console.log(problemList);
+      await zabbixSender("res.list.problems", 1, "zserver"); //change to G
       zabbix.logout();
       return problemList;
     } catch (error) {
@@ -142,18 +130,24 @@ module.exports = {
   deleteRequest: async (req) => {
     try {
       await zabbix.login();
+      await zabbixSender("req.delete.host", 1, "zserver"); //change to G
       const groups = await zabbix.request("hostgroup.get", {});
       const groupId = groups[groups.length - 1].groupid;
+      const hostName = req.queryResult.outputContexts[5].parameters.hostname;
       const hostTemp = await zabbix.request("host.get", {
         output: "extend",
         filter: {
-          host: ["David the king"],
+          host: [hostName],
         },
       });
-      const hostID=hostTemp[0].hostid;
-      
-    } catch (error) {
-      
-    }
-  }
+      const hostID = hostTemp[0].hostid;
+      console.log(hostID);
+      await zabbix.request("host.delete", [hostID]);
+      console.log(hostName);
+      console.log(hostID);
+      await zabbixSender("res.delete.host", 1, "zserver"); //change to G
+      zabbix.logout();
+      return hostName;
+    } catch (error) {}
+  },
 };

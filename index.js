@@ -21,8 +21,23 @@ app.post("/assistent", async (req, res) => {
     if (req.body == undefined) {
       res.status(404).json({ Error: "Something went wrong" });
     } else if (ans == "create") {
-      await handleWebhook.createRequest(req.body);
-      res.status(200).json({ Success: "Got a Create request" });
+      const createHost = await handleWebhook.createRequest(req.body);
+      res.status(200).json({
+        payload: {
+          google: {
+            expectUserResponse: false,
+            richResponse: {
+              items: [
+                {
+                  simpleResponse: {
+                    textToSpeech: `Created host ${createHost}`,
+                  },
+                },
+              ],
+            },
+          },
+        },
+      });
     } else if (ans == "problem") {
       const problems = await handleWebhook.problemsRequest(req.body);
       res.status(200).json({
@@ -43,9 +58,24 @@ app.post("/assistent", async (req, res) => {
       });
     }
     else if (ans == "deleted") {
-        await handleWebhook.deleteRequest(req.body);
-        res.status(200).json({ Success: "Deleted host" });
-    }
+        const deleteHost = await handleWebhook.deleteRequest(req.body);
+        res.status(200).json({
+          payload: {
+            google: {
+              expectUserResponse: false,
+              richResponse: {
+                items: [
+                  {
+                    simpleResponse: {
+                      textToSpeech: `Deleted host ${deleteHost}`,
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        });
+      }
   } catch {
     res.status(404).json({ Error: "Something went wrong" });
   }
