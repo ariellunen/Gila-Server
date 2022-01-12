@@ -1,6 +1,8 @@
 const axios = require("axios").default;
 const config = require("./config");
 const Zabbix = require("zabbix-promise");
+const SlackWebhook = require("slack-webhook");
+
 const URL = config.URL;
 const ADDRESS = config.ADDRESS;
 
@@ -9,6 +11,10 @@ const zabbix = new Zabbix({
   user: config.User,
   password: config.Password,
 });
+
+const slack = new SlackWebhook(
+  "https://hooks.slack.com/services/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"
+);
 
 const zabbixSender = async (key, value, host) => {
   try {
@@ -24,15 +30,76 @@ const zabbixSender = async (key, value, host) => {
     console.error(error);
   }
 };
+const slackSender = async (reqName, status) => {
+  const res = status ? "Success" : "Failed";
+  const resColor = status ? "#82dd55" : "#e23636";
+
+  try {
+    await slack.send({
+      attachments: [
+        {
+          color: resColor,
+          blocks: [
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: `*Request:* ${reqName}`,
+              },
+            },
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: `*Response:* ${res}`,
+              },
+            },
+            {
+              type: "context",
+              elements: [
+                {
+                  type: "image",
+                  image_url: `https://ssl-static.libsyn.com/p/assets/5/b/f/0/5bf0dd70c2b87bb6/AoG.png`,
+                  alt_text: "images",
+                },
+                {
+                  type: "mrkdwn",
+                  text: `Google Assistant`,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 module.exports = {
+  checkRequest: async (body) => {
+    const requestType = body.queryResult.action;
+    console.log(requestType);
+    if (requestType.includes("CreateNewHost")) {
+      return "create";
+    } else if (requestType.includes("ZabbixProblemReport")) {
+      return "problem";
+    } else if (requestType.includes("DeleteHost")) {
+      return "deleted";
+    } else {
+      return "failed";
+    }
+  },
+
   createRequest: async (req) => {
     const hostName = req.queryResult.outputContexts[5].parameters.hostname;
     const description =
       req.queryResult.outputContexts[5].parameters.description;
     try {
       await zabbix.login();
-      await zabbixSender("req.create.host", 1, "zserver"); //change to G
+      await zabbixSender("req.create.host", 1, "g");
+
       const groups = await zabbix.request("hostgroup.get", {});
       const groupId = groups[groups.length - 1].groupid;
       const templateID = await zabbix.request("template.get", {
@@ -65,32 +132,22 @@ module.exports = {
 
       console.log(host);
 
-      await zabbixSender("res.create.host", 1, "zserver"); //change to G
+      await zabbixSender("res.create.host", 1, "g");
+      await slackSender("Create a new host", 1);
       zabbix.logout();
       return hostName;
     } catch (error) {
       console.error(error);
-    }
-  },
-
-  checkRequest: async (body) => {
-    const requestType = body.queryResult.action;
-    console.log(requestType);
-    if (requestType.includes("CreateNewHost")) {
-      return "create";
-    } else if (requestType.includes("ZabbixProblemReport")) {
-      return "problem";
-    } else if (requestType.includes("DeleteHost")) {
-      return "deleted";
-    } else {
-      return "failed";
+      await zabbixSender("err.create.host", 3, "g");
+      await slackSender("Create a new host", 0);
     }
   },
 
   problemsRequest: async (req) => {
     try {
       await zabbix.login();
-      await zabbixSender("req.list.problems", 1, "zserver"); //change to G
+      await zabbixSender("req.list.problems", 1, "g");
+
       let problemList = "";
       const groups = await zabbix.request("hostgroup.get", {});
       const groupId = groups[groups.length - 1].groupid;
@@ -119,18 +176,24 @@ module.exports = {
         problemList += host[i].name;
       }
       console.log(problemList);
-      await zabbixSender("res.list.problems", 1, "zserver"); //change to G
+
+      await zabbixSender("res.list.problems", 1, "g");
+      await slackSender("List problems", 1);
+
       zabbix.logout();
       return problemList;
     } catch (error) {
       console.error(error);
+      await zabbixSender("err.list.problems", 3, "g");
+      await slackSender("List problems", 0);
     }
   },
 
   deleteRequest: async (req) => {
     try {
       await zabbix.login();
-      await zabbixSender("req.delete.host", 1, "zserver"); //change to G
+      await zabbixSender("req.delete.host", 1, "g");
+
       const groups = await zabbix.request("hostgroup.get", {});
       const groupId = groups[groups.length - 1].groupid;
       const hostName = req.queryResult.outputContexts[5].parameters.hostname;
@@ -145,9 +208,15 @@ module.exports = {
       await zabbix.request("host.delete", [hostID]);
       console.log(hostName);
       console.log(hostID);
-      await zabbixSender("res.delete.host", 1, "zserver"); //change to G
+
+      await zabbixSender("res.delete.host", 1, "g");
+      await slackSender("Delete a host", 1);
       zabbix.logout();
       return hostName;
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+      await zabbixSender("err.delete.host", 3, "g");
+      await slackSender("Delete a host", 0);
+    }
   },
 };
