@@ -11,7 +11,7 @@ app.use(express.json()); // parsing
 console.log(config);
 const PORT = config.PORT || 5050;
 
-const port = 5050;
+const port = 7001;
 const httpsServer = https.createServer({
  // key: fs.readFileSync('/etc/letsencrypt/live/my_api_url/privkey.pem'),
   //cert: fs.readFileSync('/etc/letsencrypt/live/my_api_url/fullchain.pem'),

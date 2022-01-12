@@ -7,8 +7,6 @@ const URL = config.URL;
 const ADDRESS = config.ADDRESS;
 const SLACK = config.SLACK;
 
-console.log(config);
-
 const zabbix = new Zabbix({
   url: config.URL,
   user: config.User,
@@ -74,6 +72,7 @@ const slackSender = async (reqName, status) => {
       ],
     });
   } catch (error) {
+     console.log("slack problem");
     console.log(error);
   }
 };
