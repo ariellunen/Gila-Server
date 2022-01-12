@@ -29,7 +29,7 @@ app.listen(PORT, () => {
 
 app.post("/", async (req, res) => {
   try {
-	console.log(req);
+
     const ans = await handleWebhook.checkRequest(req.body);
     if (req.body == undefined) {
       res.status(404).json({ Error: "Something went wrong" });

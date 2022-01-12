@@ -23,8 +23,6 @@ const zabbixSender = async (key, value, host) => {
       value,
       host,
     });
-    console.log(result);
-    console.log(ADDRESS);
   } catch (error) {
     console.error(error);
   }
@@ -132,14 +130,14 @@ module.exports = {
       console.log(host);
 
       await zabbixSender("res.create.host", 1, "g");
-      await slackSender("Create a new host", 1);
+      await slackSender(`Created a new host: ${hostName}`, 1);
 
       zabbix.logout();
       return hostName;
     } catch (error) {
       console.error(error);
       await zabbixSender("err.create.host", 3, "g");
-      await slackSender("Create a new host", 0);
+      await slackSender(`Created a new host: ${hostName}`, 0);
     }
   },
 
@@ -207,13 +205,13 @@ module.exports = {
       console.log(hostID);
 
       await zabbixSender("res.delete.host", 1, "g");
-      await slackSender("Delete a host", 1);
+      await slackSender(`Deleted host: ${hostName}`, 1);
       zabbix.logout();
       return hostName;
     } catch (error) {
       console.error(error);
       await zabbixSender("err.delete.host", 3, "g");
-      await slackSender("Delete a host", 0);
+      await slackSender(`Deleted host: ${hostName}`, 0);
     }
   },
 };
