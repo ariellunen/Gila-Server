@@ -3,6 +3,7 @@ const config = require("./config");
 const Zabbix = require("zabbix-promise");
 const URL = config.URL;
 const ADDRESS = config.ADDRESS;
+console.log(config);
 
 const zabbix = new Zabbix({
   url: config.URL,
@@ -32,7 +33,7 @@ module.exports = {
       req.queryResult.outputContexts[5].parameters.description;
     try {
       await zabbix.login();
-      await zabbixSender("req.create.host", 1, "zserver"); //change to G
+      await zabbixSender("req.create.host", 1, "g"); //change to G
       const groups = await zabbix.request("hostgroup.get", {});
       const groupId = groups[groups.length - 1].groupid;
       const templateID = await zabbix.request("template.get", {
@@ -65,7 +66,7 @@ module.exports = {
 
       console.log(host);
 
-      await zabbixSender("res.create.host", 1, "zserver"); //change to G
+      await zabbixSender("res.create.host", 1, "g"); //change to G
       zabbix.logout();
       return hostName;
     } catch (error) {
@@ -90,7 +91,7 @@ module.exports = {
   problemsRequest: async (req) => {
     try {
       await zabbix.login();
-      await zabbixSender("req.list.problems", 1, "zserver"); //change to G
+      await zabbixSender("req.list.problems", 1, "g"); //change to G
       let problemList = "";
       const groups = await zabbix.request("hostgroup.get", {});
       const groupId = groups[groups.length - 1].groupid;
@@ -119,7 +120,7 @@ module.exports = {
         problemList += host[i].name;
       }
       console.log(problemList);
-      await zabbixSender("res.list.problems", 1, "zserver"); //change to G
+      await zabbixSender("res.list.problems", 1, "g"); //change to G
       zabbix.logout();
       return problemList;
     } catch (error) {
@@ -130,7 +131,7 @@ module.exports = {
   deleteRequest: async (req) => {
     try {
       await zabbix.login();
-      await zabbixSender("req.delete.host", 1, "zserver"); //change to G
+      await zabbixSender("req.delete.host", 1, "g"); //change to G
       const groups = await zabbix.request("hostgroup.get", {});
       const groupId = groups[groups.length - 1].groupid;
       const hostName = req.queryResult.outputContexts[5].parameters.hostname;
@@ -145,7 +146,7 @@ module.exports = {
       await zabbix.request("host.delete", [hostID]);
       console.log(hostName);
       console.log(hostID);
-      await zabbixSender("res.delete.host", 1, "zserver"); //change to G
+      await zabbixSender("res.delete.host", 1, "g"); //change to G
       zabbix.logout();
       return hostName;
     } catch (error) {}

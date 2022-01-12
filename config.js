@@ -2,10 +2,10 @@ const dotenv =  require('dotenv');
 dotenv.config();
 
 const config = {
-    PORT: process.env.port,
+    PORT: process.env.PORT,
     URL: process.env.URL,
     ADDRESS: process.env.ADDRESS,
-    User : process.env.User,
+    User : "Admin",
     Password : process.env.Password,
 }
 
