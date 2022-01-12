@@ -5,6 +5,8 @@ const SlackWebhook = require("slack-webhook");
 
 const URL = config.URL;
 const ADDRESS = config.ADDRESS;
+const SLACK = config.SLACK;
+
 console.log(config);
 
 const zabbix = new Zabbix({
@@ -13,9 +15,7 @@ const zabbix = new Zabbix({
   password: config.Password,
 });
 
-const slack = new SlackWebhook(
-  "https://hooks.slack.com/services/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"
-);
+const slack = new SlackWebhook(SLACK);
 
 const zabbixSender = async (key, value, host) => {
   try {

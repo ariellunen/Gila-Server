@@ -1,3 +1,9 @@
 node_modules
 .vscode
 .env
+
+
+gila-server.com+4-key.pem
+gila-server.com+4.pem
+gila.cert
+gila.key
