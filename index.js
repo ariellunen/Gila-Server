@@ -1,23 +1,36 @@
 const express = require("express");
 const cors = require("cors");
-//const dotenv =  require('dotenv');
 const config = require("./config");
-
+const https = require('https');
+const fs = require('fs');
 const handleWebhook = require("./handleWebhook");
 const app = express();
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // parsing
+console.log(config);
 const PORT = config.PORT || 5050;
 
+const port = 5050;
+const httpsServer = https.createServer({
+ // key: fs.readFileSync('/etc/letsencrypt/live/my_api_url/privkey.pem'),
+  //cert: fs.readFileSync('/etc/letsencrypt/live/my_api_url/fullchain.pem'),
+    key: fs.readFileSync('./gila.key'),
+    cert: fs.readFileSync('./gila.cert'),
+}, app);
+
+httpsServer.listen(port, () => {
+	console.log('HTTPS Server listening on port ' + port);
+    //console.log('HTTPS Server running on port 5050');
+});
 app.listen(PORT, () => {
-  console.log(`Gila node server listening at http://localhost:${config.PORT}`);
+  console.log(`Gila node server listening at http://localhost:${PORT}`);
 });
 
-app.post("/assistent", async (req, res) => {
+app.post("/", async (req, res) => {
   try {
+	console.log(req);
     const ans = await handleWebhook.checkRequest(req.body);
-    //TODO: check if there is more param to check if valid
     if (req.body == undefined) {
       res.status(404).json({ Error: "Something went wrong" });
     } else if (ans == "create") {

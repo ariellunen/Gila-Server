@@ -5,6 +5,7 @@ const SlackWebhook = require("slack-webhook");
 
 const URL = config.URL;
 const ADDRESS = config.ADDRESS;
+console.log(config);
 
 const zabbix = new Zabbix({
   url: config.URL,
@@ -99,7 +100,6 @@ module.exports = {
     try {
       await zabbix.login();
       await zabbixSender("req.create.host", 1, "g");
-
       const groups = await zabbix.request("hostgroup.get", {});
       const groupId = groups[groups.length - 1].groupid;
       const templateID = await zabbix.request("template.get", {
@@ -134,6 +134,7 @@ module.exports = {
 
       await zabbixSender("res.create.host", 1, "g");
       await slackSender("Create a new host", 1);
+
       zabbix.logout();
       return hostName;
     } catch (error) {
@@ -147,7 +148,6 @@ module.exports = {
     try {
       await zabbix.login();
       await zabbixSender("req.list.problems", 1, "g");
-
       let problemList = "";
       const groups = await zabbix.request("hostgroup.get", {});
       const groupId = groups[groups.length - 1].groupid;
@@ -179,7 +179,6 @@ module.exports = {
 
       await zabbixSender("res.list.problems", 1, "g");
       await slackSender("List problems", 1);
-
       zabbix.logout();
       return problemList;
     } catch (error) {
@@ -193,7 +192,6 @@ module.exports = {
     try {
       await zabbix.login();
       await zabbixSender("req.delete.host", 1, "g");
-
       const groups = await zabbix.request("hostgroup.get", {});
       const groupId = groups[groups.length - 1].groupid;
       const hostName = req.queryResult.outputContexts[5].parameters.hostname;
